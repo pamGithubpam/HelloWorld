@@ -29,7 +29,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
 
       - name: Setup Pages
         id: pages
@@ -39,7 +38,7 @@ jobs:
         run: corepack disable
 
       - name: Install dependencies
-        run: npm ci --no-audit
+        run: npm install --no-audit --prefer-offline
 
       - name: Build application
         shell: bash
