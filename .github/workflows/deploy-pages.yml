@@ -56,7 +56,7 @@ jobs:
         id: prepare
         shell: bash
         run: |
-          BUILD_DIR="dist/hello-world"
+          BUILD_DIR="dist/mathlogo"
           if [[ -d "$BUILD_DIR/browser" ]]; then
             BUILD_DIR="$BUILD_DIR/browser"
           fi

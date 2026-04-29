@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = 'Hello World';
+  protected readonly title = 'MathLogo';
 }
