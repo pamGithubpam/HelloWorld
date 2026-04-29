@@ -29,31 +29,16 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
+
+      - name: Install correct npm version
+        run: npm install -g npm@10.9.2
 
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
 
       - name: Install dependencies
-        shell: bash
-        run: |
-          npm config set fetch-retries 5
-          npm config set fetch-retry-mintimeout 20000
-          npm config set fetch-retry-maxtimeout 120000
-
-          for attempt in 1 2 3; do
-            echo "npm ci attempt ${attempt}/3"
-            if npm ci --no-audit --prefer-offline; then
-              exit 0
-            fi
-            if [[ "$attempt" -lt 3 ]]; then
-              echo "npm ci failed, retrying..."
-            fi
-          done
-
-          echo "npm ci failed after retries, falling back to npm install"
-          npm install --no-audit --prefer-offline
+        run: npm ci --no-audit
 
       - name: Build application
         shell: bash
