@@ -10,12 +10,14 @@ export interface Calculation {
 export interface Category {
   name: string;
   image?: string;
+  features?: string[];
   calculations: Calculation[];
 }
 
 export interface Theme {
   name: string;
   images: string[];
+  feedback?: { correct: string; wrong: string };
 }
 
 export interface GameConfig {
@@ -138,11 +140,29 @@ export class GameService {
 
   getRandomRewardImage(): string | null {
     const config = this.gameConfig();
-    if (config?.rewardEnabled && config.selectedImages.length > 0) {
+    const themeName = config?.theme;
+    if (config?.rewardEnabled && themeName && config.selectedImages.length > 0) {
       const randomIndex = Math.floor(Math.random() * config.selectedImages.length);
-      return config.selectedImages[randomIndex];
+      const imageName = config.selectedImages[randomIndex];
+      return `assets/images/themes/${themeName}/${imageName}.svg`;
     }
     return null;
+  }
+
+  getThemeFeedbackImage(correct: boolean): string | null {
+    const config = this.gameConfig();
+    const themeName = config?.theme;
+    if (!themeName) {
+      return null;
+    }
+    const theme = this._themes().find((t) => t.name === themeName);
+    if (!theme) {
+      return null;
+    }
+    const imageName = correct
+      ? (theme.feedback?.correct ?? 'correct')
+      : (theme.feedback?.wrong ?? 'wrong');
+    return `assets/images/themes/${themeName}/${imageName}.svg`;
   }
 
   resetGame() {

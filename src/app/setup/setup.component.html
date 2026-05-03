@@ -7,14 +7,29 @@
   </div>
 
   <div class="form-group">
-    <label>Catégories:</label>
+    <label>Filtrer par caractéristiques:</label>
+    <div class="features-filter">
+      @for (feature of allFeatures; track feature) {
+        <button
+          type="button"
+          class="feature-btn"
+          [class.selected]="selectedFeatures().includes(feature)"
+          (click)="toggleFeature(feature)">
+          {{ feature }}
+        </button>
+      }
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Catégories ({{ filteredCategories.length }} disponible(s)):</label>
     <div class="categories-status">
       <small>Chargées: {{ categories().length }} catégorie(s)</small>
     </div>
     <div class="categories-list">
       <select (change)="addCategory($event)">
         <option value="">Ajouter une catégorie</option>
-        @for (cat of categories(); track cat.name) {
+        @for (cat of filteredCategories; track cat.name) {
           <option [value]="cat.name">{{ cat.name }}</option>
         }
       </select>
@@ -50,46 +65,49 @@
     </label>
   </div>
 
+  <div class="form-group">
+    <label>Thème:</label>
+    <div class="themes-status">
+      <small>Chargés: {{ themes().length }} thème(s)</small>
+    </div>
+    <div class="themes-grid">
+      @for (theme of themes(); track theme.name) {
+        <div class="theme-card"
+             [class.selected]="selectedTheme() === theme.name"
+             (click)="onThemeSelect(theme.name)">
+          <div class="theme-preview">
+            @for (image of theme.images.slice(0, 2); track image) {
+              <img [src]="'assets/images/themes/' + theme.name + '/' + image + '.svg'"
+                   [alt]="image"
+                   class="preview-image">
+            }
+          </div>
+          <span class="theme-name">{{ theme.name }}</span>
+        </div>
+      }
+    </div>
+  </div>
+
   @if (rewardEnabled()) {
     <div class="form-group">
-      <label>Thème:</label>
-      <div class="themes-status">
-        <small>Chargés: {{ themes().length }} thème(s)</small>
-      </div>
-      <div class="themes-grid">
-        @for (theme of themes(); track theme.name) {
-          <div class="theme-card" 
-               [class.selected]="selectedTheme() === theme.name"
-               (click)="onThemeSelect(theme.name)">
-            <div class="theme-preview">
-              @for (image of theme.images.slice(0, 2); track image) {
-                <img [src]="'assets/images/themes/' + theme.name + '/' + image + '.svg'" 
-                     [alt]="image"
-                     class="preview-image">
-              }
+      <label>Choisir 2 images de récompense:</label>
+      @if (selectedTheme()) {
+        <div class="images-list">
+          @for (image of themes().find(t => t.name === selectedTheme())?.images; track image) {
+            <div class="image-item"
+                 [class.selected]="selectedImages().includes(image)"
+                 (click)="toggleImage(image)">
+              <img [src]="'assets/images/themes/' + selectedTheme() + '/' + image + '.svg'" [alt]="image">
+              <span>{{ image }}</span>
             </div>
-            <span class="theme-name">{{ theme.name }}</span>
-          </div>
-        }
-      </div>
+          }
+        </div>
+      } @else {
+        <p class="hint">Sélectionnez d'abord un thème pour choisir vos images de récompense.</p>
+      }
     </div>
   }
 
-  @if (selectedTheme()) {
-    <div class="form-group">
-      <label>Choisir 2 images de récompense:</label>
-      <div class="images-list">
-        @for (image of themes().find(t => t.name === selectedTheme())?.images; track image) {
-          <div class="image-item"
-               [class.selected]="selectedImages().includes(image)"
-               (click)="toggleImage(image)">
-            <img [src]="'assets/images/themes/' + selectedTheme() + '/' + image + '.svg'" [alt]="image">
-            <span>{{ image }}</span>
-          </div>
-        }
-      </div>
-    </div>
-  }
 
   <div class="percentage-summary">
     <span>Total: {{ totalPercent }}%</span>
@@ -97,5 +115,5 @@
       <span class="error">Le total des pourcentages doit être de 100&nbsp;%.</span>
     }
   </div>
-  <button (click)="startGame()" [disabled]="selectedCategories().length === 0 || !percentageValid">Commencer le Jeu</button>
+  <button (click)="startGame()" [disabled]="selectedCategories().length === 0 || !percentageValid || !selectedTheme()">Commencer le Jeu</button>
 </div>

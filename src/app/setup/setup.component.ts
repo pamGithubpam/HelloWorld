@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { GameService, Category, Theme, GameConfig } from '../game.service';
+import { GameService, Category, Theme, GameConfig, Calculation } from '../game.service';
 
 @Component({
   selector: 'app-setup',
@@ -20,6 +20,33 @@ export class SetupComponent {
   rewardEnabled = signal(false);
   selectedTheme = signal<string>('');
   selectedImages = signal<string[]>([]);
+  selectedFeatures = signal<string[]>([]);
+
+  get allFeatures(): string[] {
+    const features = new Set<string>();
+    this.categories().forEach((cat) => {
+      cat.features?.forEach((f) => features.add(f));
+    });
+    return Array.from(features).sort();
+  }
+
+  get filteredCategories(): { name: string; calculations: Calculation[] }[] {
+    if (this.selectedFeatures().length === 0) {
+      return this.categories();
+    }
+    return this.categories().filter((cat) =>
+      this.selectedFeatures().some((f) => cat.features?.includes(f)),
+    );
+  }
+
+  toggleFeature(feature: string) {
+    const current = this.selectedFeatures();
+    if (current.includes(feature)) {
+      this.selectedFeatures.set(current.filter((f) => f !== feature));
+    } else {
+      this.selectedFeatures.set([...current, feature]);
+    }
+  }
 
   get totalPercent(): number {
     return this.selectedCategories().reduce((sum, c) => sum + c.percentage, 0);
@@ -66,12 +93,6 @@ export class SetupComponent {
     );
   }
 
-  onThemeChange(event: Event) {
-    const value = (event.target as HTMLSelectElement).value;
-    this.selectedTheme.set(value);
-    this.selectedImages.set([]);
-  }
-
   onThemeSelect(themeName: string) {
     this.selectedTheme.set(themeName);
     this.selectedImages.set([]);
@@ -95,7 +116,7 @@ export class SetupComponent {
   }
 
   startGame() {
-    if (!this.percentageValid || this.selectedCategories().length === 0) {
+    if (!this.percentageValid || this.selectedCategories().length === 0 || !this.selectedTheme()) {
       return;
     }
 

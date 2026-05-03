@@ -2,23 +2,28 @@
   "themes": [
     {
       "name": "Halloween",
-      "images": ["pumpkin", "ghost", "witch", "bat", "candy"]
+      "images": ["pumpkin", "ghost", "witch", "bat", "candy"],
+      "feedback": { "correct": "correct", "wrong": "wrong" }
     },
     {
       "name": "Noël",
-      "images": ["tree", "santa", "snowman", "gift", "star"]
+      "images": ["tree", "santa", "snowman", "gift", "star"],
+      "feedback": { "correct": "correct", "wrong": "wrong" }
     },
     {
       "name": "Carnaval",
-      "images": ["mask", "balloon", "confetti", "clown", "parade"]
+      "images": ["mask", "balloon", "confetti", "clown", "parade"],
+      "feedback": { "correct": "correct", "wrong": "wrong" }
     },
     {
       "name": "Pâques",
-      "images": ["egg", "bunny", "chick", "basket", "flower"]
+      "images": ["egg", "bunny", "chick", "basket", "flower"],
+      "feedback": { "correct": "correct", "wrong": "wrong" }
     },
     {
       "name": "Vacances d'été",
-      "images": ["sun", "beach", "icecream", "ball", "shell"]
+      "images": ["sun", "beach", "icecream", "ball", "shell"],
+      "feedback": { "correct": "correct", "wrong": "wrong" }
     }
   ]
 }

@@ -1,8 +1,9 @@
 {
   "categories": [
     {
-      "name": "Addition simple",
+      "name": "Amis de 8",
       "image": "addition",
+      "features": ["Amis de","Lacunaire"],
       "calculations": [
         {"text": "1 + 1 =", "answer": "2"},
         {"text": "2 + 2 =", "answer": "4"},
@@ -14,6 +15,7 @@
     {
       "name": "Soustraction simple",
       "image": "soustraction",
+      "features": ["facile", "calcul-mental", "nombres-petits"],
       "calculations": [
         {"text": "2 - 1 =", "answer": "1"},
         {"text": "4 - 2 =", "answer": "2"},
@@ -25,6 +27,7 @@
     {
       "name": "Multiplication simple",
       "image": "multiplication",
+      "features": ["moyen", "tables", "nombres-petits"],
       "calculations": [
         {"text": "2 × 2 =", "answer": "4"},
         {"text": "3 × 3 =", "answer": "9"},
@@ -36,6 +39,7 @@
     {
       "name": "Division simple",
       "image": "division",
+      "features": ["moyen", "calcul-mental", "nombres-petits"],
       "calculations": [
         {"text": "4 ÷ 2 =", "answer": "2"},
         {"text": "6 ÷ 3 =", "answer": "2"},

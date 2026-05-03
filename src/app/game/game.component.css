@@ -21,8 +21,96 @@ input {
   margin-bottom: 20px;
 }
 
-button {
+.keyboard-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.keyboard-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.answer-box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 220px;
+}
+
+.answer-box input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.answer-box button {
+  width: 100%;
+}
+
+.keypad-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 70px);
+  gap: 10px;
+}
+
+.keypad-grid button {
+  width: 70px;
+  height: 70px;
   font-size: 1.5rem;
+  border-radius: 10px;
+}
+
+.answer-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.feedback-panel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background-color: #fff;
+}
+
+.feedback-panel img {
+  width: 54px;
+  height: 54px;
+}
+
+.feedback-panel span {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.model-status,
+.model-error {
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+}
+
+.model-status {
+  color: #007bff;
+}
+
+.model-error {
+  color: #c00;
+}
+
+button {
+  font-size: 1.2rem;
   padding: 10px 20px;
   background-color: #007bff;
   color: white;
